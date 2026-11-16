@@ -1,0 +1,12 @@
+node_modules
+.git
+.env
+nginx
+grafana
+scripts
+results
+backups
+*.md
+*.yml
+*.yaml
+*.sql
