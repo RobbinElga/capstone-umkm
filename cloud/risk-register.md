@@ -11,7 +11,7 @@ Skor = Probabilitas (1-5) × Dampak (1-5). Kategori: **Tinggi** ≥ 15, **Sedang
 | 5 | Data terhapus tidak sengaja / volume database hilang | 2 | 5 | 10 | Sedang | Backup `pg_dump` terjadwal (`scripts/backup.sh`), volume `pgdata` persisten |
 | 6 | Kebocoran kredensial database | 2 | 5 | 10 | Sedang | Password disimpan di `.env` (masuk `.gitignore`), tidak ada kredensial di repository, port 5432 tidak dipublikasikan |
 | 7 | Salah satu container aplikasi mati | 3 | 3 | 9 | Sedang | Nginx otomatis mengalihkan trafik ke container lain, `restart: unless-stopped` pada semua service |
-| 8 | Sertifikat TLS kedaluwarsa | 2 | 3 | 6 | Rendah | Let's Encrypt dengan auto-renew (certbot timer), pantau tanggal kedaluwarsa |
+| 8 | Sertifikat TLS IP (berlaku ±6 hari) gagal diperpanjang sehingga HTTPS mati | 3 | 3 | 9 | Sedang | Perpanjangan otomatis lewat cron `certbot renew` tiap 12 jam, `--deploy-hook` me-reload Nginx, HTTP port 80 tetap aktif sebagai cadangan, tanggal kedaluwarsa dicek dengan `certbot certificates` sebelum penilaian. Sertifikat terikat ke IP, sehingga instance tidak boleh dibuat ulang |
 
 ## Aset yang dilindungi
 - Data katalog produk (PostgreSQL), kredensial (`.env`), akses server (SSH), ketersediaan layanan (Nginx + 2 container app).
